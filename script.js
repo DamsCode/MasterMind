@@ -5,26 +5,35 @@
 
     const tabPion = [];
 
-
     tabCouleur.forEach(element => {
-        let pion = create(element, true);
+        let pion = createpion(element, true);
         tabPion.push(pion);
     });
 
     const divCouleur = document.getElementById("couleurs");
     const tabReponses = document.getElementById("tabrep");
     const tabHistorique = document.getElementById("tabhisto");
-    console.log(tabPion);
 
     tabPion.forEach(element => {
         divCouleur.appendChild(element);
     });
+    let currrow = document.createElement("tr");
 
-    function create(element, mode) {
+    function createpion(element, mode) {
         let pion;
         if (mode) {
             pion = document.createElement("button");
             pion.id = element;
+            pion.addEventListener("click", e => {
+                let tabtd = currrow.getElementsByTagName("td");
+                if (tabtd.length == 0 || tabtd.length == 4) {
+                    currrow = document.createElement("tr");
+                    currrow.appendChild(createpion(e.target.id, false));
+                    tabReponses.appendChild(currrow);
+                } else if (tabtd.length == 4) {} else {
+                    currrow.appendChild(createpion(e.target.id, false));
+                }
+            });
         } else {
             pion = document.createElement("td");
         }
@@ -34,17 +43,6 @@
         pion.style.width = "30px";
         pion.style.height = "30px";
         pion.style.borderRadius = "50%";
-        pion.addEventListener("click", (e) => {
-            let tabtd = tabReponses.getElementsByTagName("td");
-            let tr = document.createElement("tr");
-            tr.className = "test";
-            if (tabtd.length == 0 || tabtd.length == 4) {
-                tr.appendChild(create(e.target.id, false));
-                tabReponses.appendChild(tr);
-            } else
-                tabReponses.getElementsByClassName("test")[tabReponses.getElementsByClassName("test").length - 1].appendChild(create(e.target.id, false));
-
-        });
         return pion;
     }
 })();
