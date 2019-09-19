@@ -27,28 +27,24 @@
             pion.id = element;
             pion.addEventListener("click", e => {
                 let tabtd = currrow.getElementsByTagName("td");
-                let tab = [];
                 if (tabtd.length == 0) {
                     currrow = newrow(e, tabReponses);
-                } else if (tabtd.length == 5) {
-                    // currrow.appendChild(createpion(tabCouleurIndice[0], false));
-                    // currrow.appendChild(createpion(tabCouleurIndice[1], false));
-
+                    // currrow.appendChild(createpion(e.target.id, false));
+                } else if (tabtd.length == 4) {
                     for (let index = 0; index < tabSol.length; index++) {
                         let b = false;
-                        for (let ind = 0; ind < tabtd.length; ind++) {
-
-                            if (tabSol[index] == tabtd[ind].style.backgroundColor && !b) {
-                                tab.push(tabtd[ind].style.backgroundColor);
-                                b = true;
-                                // console.log(tab.find(e => tabtd[ind].style.backgroundColor));
-
-
+                        if (tabSol[index] == tabtd[index].style.backgroundColor) {
+                            currrow.appendChild(createpion(tabCouleurIndice[0], false));
+                        } else {
+                            for (let ind = 0; ind < tabtd.length; ind++) {
+                                if (tabSol[index] == tabtd[ind].style.backgroundColor && !b) {
+                                    currrow.appendChild(createpion(tabCouleurIndice[1], false));
+                                    b = true;
+                                }
                             }
                         }
 
                     }
-                    console.log(tab);
                     tabHistorique.appendChild(currrow);
                     currrow = newrow(e, tabReponses);
                 } else {
