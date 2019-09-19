@@ -26,11 +26,15 @@
             pion.id = element;
             pion.addEventListener("click", e => {
                 let tabtd = currrow.getElementsByTagName("td");
-                if (tabtd.length == 0 || tabtd.length == 4) {
-                    currrow = document.createElement("tr");
-                    currrow.appendChild(createpion(e.target.id, false));
-                    tabReponses.appendChild(currrow);
-                } else if (tabtd.length == 4) {} else {
+                if (tabtd.length == 0) {
+                    currrow = newrow(e, tabReponses);
+                } else if (tabtd.length == 4) {
+                    currrow.appendChild(createpion(tabCouleurIndice[0], false));
+                    currrow.appendChild(createpion(tabCouleurIndice[1], false));
+
+                    tabHistorique.appendChild(currrow);
+                    currrow = newrow(e, tabReponses);
+                } else {
                     currrow.appendChild(createpion(e.target.id, false));
                 }
             });
@@ -44,5 +48,12 @@
         pion.style.height = "30px";
         pion.style.borderRadius = "50%";
         return pion;
+    }
+
+    function newrow(elem, tab) {
+        let row = document.createElement("tr");
+        row.appendChild(createpion(elem.target.id, false));
+        tab.appendChild(row);
+        return row;
     }
 })();
