@@ -4,6 +4,7 @@
     const tabCouleurIndice = ["black", "white"];
 
     const tabPion = [];
+    const tabSol = ["red", "yellow", "green", "blue"];
 
     tabCouleur.forEach(element => {
         let pion = createpion(element, true);
@@ -26,12 +27,28 @@
             pion.id = element;
             pion.addEventListener("click", e => {
                 let tabtd = currrow.getElementsByTagName("td");
+                let tab = [];
                 if (tabtd.length == 0) {
                     currrow = newrow(e, tabReponses);
-                } else if (tabtd.length == 4) {
-                    currrow.appendChild(createpion(tabCouleurIndice[0], false));
-                    currrow.appendChild(createpion(tabCouleurIndice[1], false));
+                } else if (tabtd.length == 5) {
+                    // currrow.appendChild(createpion(tabCouleurIndice[0], false));
+                    // currrow.appendChild(createpion(tabCouleurIndice[1], false));
 
+                    for (let index = 0; index < tabSol.length; index++) {
+                        let b = false;
+                        for (let ind = 0; ind < tabtd.length; ind++) {
+
+                            if (tabSol[index] == tabtd[ind].style.backgroundColor && !b) {
+                                tab.push(tabtd[ind].style.backgroundColor);
+                                b = true;
+                                // console.log(tab.find(e => tabtd[ind].style.backgroundColor));
+
+
+                            }
+                        }
+
+                    }
+                    console.log(tab);
                     tabHistorique.appendChild(currrow);
                     currrow = newrow(e, tabReponses);
                 } else {
